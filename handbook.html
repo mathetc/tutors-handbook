@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathETC Tutor Handbook</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-orange: #FF6B35;
+            --primary-blue: #004E89;
+            --soft-cream: #FFF8F0;
+            --light-blue: #E8F4F8;
+            --charcoal: #2D3142;
+            --coral-accent: #FF8C61;
+            --success-green: #28A745;
+            --alert-red: #DC3545;
+            --white: #FFFFFF;
+            --light-gray: #F8F9FA;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white);
+            color: var(--charcoal);
+            line-height: 1.7;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 280px;
+            height: 100vh;
+            background: var(--primary-blue);
+            padding: 2rem 0;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--primary-orange);
+            border-radius: 3px;
+        }
+
+        .sidebar-logo {
+            padding: 0 1.5rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .sidebar-logo h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .sidebar-logo h1 span {
+            color: var(--primary-orange);
+        }
+
+        .sidebar-logo p {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.7);
+            margin-top: 0.25rem;
+        }
+
+        .nav-section {
+            padding: 0.5rem 1.5rem;
+        }
+
+        .nav-section-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0.75rem;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+        }
+
+        .nav-links a.active {
+            background: var(--primary-orange);
+            color: var(--white);
+        }
+
+        .nav-links .nav-number {
+            width: 24px;
+            height: 24px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .nav-links a.active .nav-number {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-blue);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            box-shadow: 0 4px 15px rgba(0,78,137,0.3);
+        }
+
+        .menu-toggle span {
+            width: 24px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--soft-cream) 0%, var(--light-blue) 100%);
+            padding: 6rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,107,53,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -150px;
+            left: -100px;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(0,78,137,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: white;
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .hero h1 span {
+            color: var(--primary-orange);
+        }
+
+        .hero .subtitle {
+            font-size: 1.25rem;
+            color: var(--charcoal);
+            margin-bottom: 2rem;
+        }
+
+        .hero .tagline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            color: var(--charcoal);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        /* Section Styles */
+        .handbook-section {
+            padding: 4rem;
+            border-bottom: 1px solid #eee;
+            scroll-margin-top: 2rem;
+        }
+
+        .handbook-section:nth-child(even) {
+            background: var(--light-gray);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--coral-accent) 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .section-title h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(1.75rem, 3vw, 2.25rem);
+            color: var(--primary-blue);
+            margin-bottom: 0.25rem;
+        }
+
+        .section-title p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px rgba(0,78,137,0.08);
+            margin-bottom: 1.5rem;
+        }
+
+        .handbook-section:nth-child(even) .content-card {
+            background: white;
+        }
+
+        .content-card h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .content-card h3 .icon {
+            font-size: 1.5rem;
+        }
+
+        .content-card p {
+            margin-bottom: 1rem;
+            color: var(--charcoal);
+        }
+
+        .content-card ul {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .content-card li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 0.75rem;
+            color: var(--charcoal);
+        }
+
+        .content-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            background: var(--success-green);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .content-card li.bullet::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--primary-orange);
+            border-radius: 50%;
+            top: 0.5rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--soft-cream) 100%);
+            border-left: 4px solid var(--primary-orange);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-weight: 500;
+            color: var(--primary-blue);
+        }
+
+        .alert-box {
+            background: #FFF5F5;
+            border-left: 4px solid var(--alert-red);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1.5rem 0;
+        }
+
+        .alert-box p {
+            margin: 0;
+            color: var(--alert-red);
+            font-weight: 500;
+        }
+
+        .info-box {
+            background: var(--light-blue);
+            border-left: 4px solid var(--primary-blue);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1.5rem 0;
+        }
+
+        .info-box p {
+            margin: 0;
+            color: var(--primary-blue);
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Session Structure */
+        .session-structure {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .session-step {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--light-gray);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            transition: transform 0.2s ease;
+        }
+
+        .session-step:hover {
+            transform: translateX(5px);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-orange);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--primary-blue);
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .step-content span {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        /* Contact Info */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .contact-item {
+            background: var(--light-gray);
+            padding: 1.25rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,78,137,0.1);
+        }
+
+        .contact-item .icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item h4 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--primary-blue);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-item a {
+            color: var(--primary-orange);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .contact-item p {
+            color: #666;
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        /* Package Cards */
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .package-card {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #003366 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        .package-card:nth-child(2) {
+            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--coral-accent) 100%);
+        }
+
+        .package-card:nth-child(3) {
+            background: linear-gradient(135deg, var(--success-green) 0%, #1e7e34 100%);
+        }
+
+        /* Evaluation Grid */
+        .eval-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .eval-item {
+            background: var(--light-gray);
+            padding: 1.25rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .eval-item .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .eval-item h4 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--primary-blue);
+            font-size: 0.95rem;
+        }
+
+        /* Acknowledgment Form */
+        .acknowledgment-section {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #003366 100%);
+            padding: 4rem;
+        }
+
+        .acknowledgment-card {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .acknowledgment-card h2 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--primary-blue);
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .acknowledgment-card > p {
+            text-align: center;
+            color: var(--charcoal);
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 4px rgba(255,107,53,0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--soft-cream);
+            border-radius: 12px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            accent-color: var(--primary-orange);
+            cursor: pointer;
+            flex-shrink: 0;
+            margin-top: 0.25rem;
+        }
+
+        .checkbox-group label {
+            color: var(--charcoal);
+            line-height: 1.6;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--coral-accent) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,107,53,0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--charcoal);
+            color: white;
+            padding: 3rem 4rem;
+            text-align: center;
+        }
+
+        footer .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        footer .logo span {
+            color: var(--primary-orange);
+        }
+
+        footer p {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        footer .quote {
+            color: var(--coral-accent);
+            font-style: italic;
+            margin-top: 1rem;
+        }
+
+        /* Table of Contents Section */
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .toc-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            background: white;
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--charcoal);
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .toc-item:hover {
+            border-color: var(--primary-orange);
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,78,137,0.1);
+        }
+
+        .toc-item .toc-number {
+            width: 36px;
+            height: 36px;
+            background: var(--primary-blue);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .toc-item:hover .toc-number {
+            background: var(--primary-orange);
+        }
+
+        .toc-item span {
+            font-weight: 500;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 280px;
+            right: 0;
+            height: 4px;
+            background: #eee;
+            z-index: 999;
+        }
+
+        .progress-bar .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-orange), var(--coral-accent));
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Success Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: white;
+            padding: 3rem;
+            border-radius: 24px;
+            text-align: center;
+            max-width: 400px;
+            margin: 1rem;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.show .modal {
+            transform: scale(1);
+        }
+
+        .modal .icon {
+            width: 80px;
+            height: 80px;
+            background: var(--success-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .modal h3 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal button {
+            padding: 0.75rem 2rem;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .progress-bar {
+                left: 0;
+            }
+
+            .handbook-section {
+                padding: 3rem 2rem;
+            }
+
+            .hero {
+                padding: 5rem 2rem;
+            }
+
+            footer {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                padding: 4rem 1.5rem;
+            }
+
+            .handbook-section {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .section-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .section-number {
+                width: 50px;
+                height: 50px;
+                font-size: 1.25rem;
+            }
+
+            .content-card {
+                padding: 1.5rem;
+            }
+
+            .acknowledgment-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .sidebar, .menu-toggle, .progress-bar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .handbook-section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Menu Toggle -->
+    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <h1>Math<span>ETC</span></h1>
+            <p>Tutor Handbook</p>
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Contents</div>
+            <ul class="nav-links">
+                <li><a href="#welcome" class="active"><span class="nav-number">1</span> Welcome</a></li>
+                <li><a href="#mission"><span class="nav-number">2</span> Mission & Values</a></li>
+                <li><a href="#tutor-expectations"><span class="nav-number">3</span> Tutor Expectations</a></li>
+                <li><a href="#student-expectations"><span class="nav-number">4</span> Student Expectations</a></li>
+                <li><a href="#classroom"><span class="nav-number">5</span> Classroom Management</a></li>
+                <li><a href="#punctuality"><span class="nav-number">6</span> Punctuality & Conduct</a></li>
+                <li><a href="#cancellation"><span class="nav-number">7</span> Cancellation Policy</a></li>
+                <li><a href="#communication"><span class="nav-number">8</span> Communication</a></li>
+                <li><a href="#tutorbird"><span class="nav-number">9</span> TutorBird Guidelines</a></li>
+                <li><a href="#virtual"><span class="nav-number">10</span> Virtual Standards</a></li>
+                <li><a href="#lesson-planning"><span class="nav-number">11</span> Lesson Planning</a></li>
+                <li><a href="#payroll"><span class="nav-number">12</span> Payroll & Hours</a></li>
+                <li><a href="#safety"><span class="nav-number">13</span> Safety & Confidentiality</a></li>
+                <li><a href="#performance"><span class="nav-number">14</span> Performance</a></li>
+                <li><a href="#acknowledgment"><span class="nav-number">✓</span> Acknowledgment</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <span class="hero-badge">📚 Official Handbook 2024</span>
+                <h1>Math<span>ETC</span> Tutor Handbook</h1>
+                <p class="subtitle">Empowering Tutors to Inspire Excellence</p>
+                <span class="tagline">
+                    <span>🎓</span>
+                    Personalized Academic Support • K–12
+                </span>
+            </div>
+        </section>
+
+        <!-- Table of Contents -->
+        <section class="handbook-section" id="toc">
+            <div class="section-header fade-in">
+                <div class="section-number">📋</div>
+                <div class="section-title">
+                    <h2>Table of Contents</h2>
+                    <p>Quick navigation to all handbook sections</p>
+                </div>
+            </div>
+            <div class="toc-grid fade-in">
+                <a href="#welcome" class="toc-item"><span class="toc-number">1</span><span>Welcome & Introduction</span></a>
+                <a href="#mission" class="toc-item"><span class="toc-number">2</span><span>Mission & Core Values</span></a>
+                <a href="#tutor-expectations" class="toc-item"><span class="toc-number">3</span><span>Tutor Expectations</span></a>
+                <a href="#student-expectations" class="toc-item"><span class="toc-number">4</span><span>Student Expectations</span></a>
+                <a href="#classroom" class="toc-item"><span class="toc-number">5</span><span>Classroom Management</span></a>
+                <a href="#punctuality" class="toc-item"><span class="toc-number">6</span><span>Punctuality & Professional Conduct</span></a>
+                <a href="#cancellation" class="toc-item"><span class="toc-number">7</span><span>Cancellation & Rescheduling</span></a>
+                <a href="#communication" class="toc-item"><span class="toc-number">8</span><span>Communication & Reporting</span></a>
+                <a href="#tutorbird" class="toc-item"><span class="toc-number">9</span><span>TutorBird Guidelines</span></a>
+                <a href="#virtual" class="toc-item"><span class="toc-number">10</span><span>Virtual Class Standards</span></a>
+                <a href="#lesson-planning" class="toc-item"><span class="toc-number">11</span><span>Lesson Planning & Best Practices</span></a>
+                <a href="#payroll" class="toc-item"><span class="toc-number">12</span><span>Payroll & Work Hours</span></a>
+                <a href="#safety" class="toc-item"><span class="toc-number">13</span><span>Student Safety & Confidentiality</span></a>
+                <a href="#performance" class="toc-item"><span class="toc-number">14</span><span>Performance & Accountability</span></a>
+                <a href="#acknowledgment" class="toc-item"><span class="toc-number">✓</span><span>Acknowledgment of Receipt</span></a>
+            </div>
+        </section>
+
+        <!-- Section 1: Welcome -->
+        <section class="handbook-section" id="welcome">
+            <div class="section-header fade-in">
+                <div class="section-number">1</div>
+                <div class="section-title">
+                    <h2>Welcome & Introduction</h2>
+                    <p>Your journey with MathETC begins here</p>
+                </div>
+            </div>
+            <div class="content-card fade-in">
+                <h3><span class="icon">👋</span> Welcome to MathETC</h3>
+                <p>We are committed to delivering exceptional, results-driven tutoring services in a supportive and structured learning environment. Our goal is to strengthen academic performance, build confidence, and cultivate independent learners.</p>
+                <div class="highlight-box">
+                    <p>As a tutor, you represent MathETC's standards of excellence, professionalism, and integrity. This handbook outlines expectations, policies, and operational procedures required for all tutors.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Mission & Core Values -->
+        <section class="handbook-section" id="mission">
+            <div class="section-header fade-in">
+                <div class="section-number">2</div>
+                <div class="section-title">
+                    <h2>Vision, Mission & Core Values</h2>
+                    <p>What drives us every day</p>
+                </div>
+            </div>
+            <div class="two-column">
+                <div class="content-card fade-in">
+                    <h3><span class="icon">🎯</span> Our Mission</h3>
+                    <p>Our Mission is to provide Personalized Academic Support to students in Kindergarten through 12th grade.</p>
+                    <ul>
+                        <li class="bullet">We encourage Excellence in all subjects</li>
+                        <li class="bullet">We empower students to benchmark global standards</li>
+                        <li class="bullet">We nurture students to give back</li>
+                        <li class="bullet">We partner with passionate Instructors</li>
+                        <li class="bullet">We partner with parents and/or guardians to make informed educational decisions</li>
+                    </ul>
+                </div>
+                <div class="content-card fade-in">
+                    <h3><span class="icon">🔭</span> Our Vision</h3>
+                    <p>Math ETC provides quality educational programs committed to inspire and educate K-12 students to reach their full academic potential.</p>
+                    <p>We strive to impact the life of the learner, their families and communities we serve.</p>
+                    <div class="highlight-box">
+                        <p><strong>Our Core Values:</strong> We believe that every student can learn given the appropriate academic support and resources.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Tutor Expectations -->
+        <section class="handbook-section" id="tutor-expectations">
+            <div class="section-header fade-in">
+                <div class="section-number">3</div>
+                <div class="section-title">
+                    <h2>Tutor Expectations</h2>
+                    <p>Standards all tutors must uphold</p>
+                </div>
+            </div>
+            <div class="content-card fade-in">
+                <h3><span class="icon">📋</span> All tutors are expected to:</h3>
+                <ul>
+                    <li>Deliver high-quality, engaging instruction</li>
+                    <li>Prepare for each session in advance</li>
+                    <li>Maintain professionalism in appearance and conduct</li>
+                    <li>Be punctual and reliable</li>
+                    <li>Protect student confidentiality</li>
+                    <li>Follow all TutorBird documentation requirements</li>
+                    <li>Communicate proactively with the Tutor Coordinator</li>
+                    <li>Uphold MathETC's policies at all times</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 4: Student Expectations -->
+        <section class="handbook-section" id="student-expectations">
+            <div class="section-header fade-in">
+                <div class="section-number">4</div>
+                <div class="section-title">
+                    <h2>Student Expectations</h2>
+                    <p>Setting standards for student success</p>
+                </div>
+            </div>
+            <div class="two-column">
+                <div class="content-card fade-in">
+                    <h3><span class="icon">🎒</span> Students are expected to:</h3>
+                    <p>Tutors must clearly communicate and reinforce student expectations.</p>
+                    <ul>
+                        <li>Arrive on time and prepared</li>
+                        <li>Bring required materials</li>
+                        <li>Participate actively</li>
+                        <li>Complete assigned practice work</li>
+                        <li>Demonstrate respectful behavior</li>
+                        <li>Follow classroom and virtual conduct guidelines</li>
+                    </ul>
+                </div>
+                <div class="content-card fade-in">
+                    <h3><span class="icon">👨‍🏫</span> Tutor Responsibility:</h3>
+                    <ul>
+                        <li>Set clear learning objectives</li>
+                        <li>Encourage accountability</li>
+                        <li>Provide structured session flow</li>
+                        <li>Address concerns early and professionally</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Classroom Management -->
+        <section class="handbook-section" id="classroom">
+            <div class="section-header fade-in">
+                <div class="section-number">5</div>
+                <div class="section-title">
+                    <h2>Classroom Management</h2>
+                    <p>Creating productive learning environments</p>
+                </div>
+            </div>
+            <div class="content-card fade-in">
+                <h3><span class="icon">🏫</span> Effective classroom management ensures productive sessions</h3>
+                <p><strong>Tutors Must:</strong></p>
+                <ul>
+                    <li>Establish session structure</li>
+                    <li>Minimize distractions</li>
+                    <li>Use positive reinforcement</li>
+                    <li>Redirect inappropriate behavior calmly</li>
+                    <li>Maintain authority while remaining respectful</li>
+                    <li>Document behavioral concerns in TutorBird</li>
+                </ul>
+            </div>
+            <div class="content-card fade-in">
+                <h3><span class="icon">⏱️</span> Session Structure Recommendation:</h3>
+                <div class="session-structure">
+                    <div class="session-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Warm-up / Review</h4>
+                            <span>5–10 minutes</span>
+                        </div>
+                    </div>
+                    <div class="session-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Core Instruction</h4>
+                            <span>25–40 minutes</span>
+                        </div>
+                    </div>
+                    <div class="session-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Guided Practice</h4>
+                            <span>Hands-on application</span>
+                        </div>
+                    </div>
+                    <div class="session-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Recap & Action Plan</h4>
+                            <span>Summary and next steps</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="alert-box">
+                    <p>⚠️ Serious behavior issues must be escalated immediately to the Tutor Coordinator.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Punctuality & Professional Conduct -->
+        <section class="handbook-section" id="punctuality">
+            <div class="section-header fade-in">
+                <div class="section-number">6</div>
+                <div class="section-title">
+                    <h2>Punctuality & Professional Conduct</h2>
+                    <p>Professionalism in every interaction</p>
+                </div>
+            </div>
+            <div class="two-column">
+                <div class="content-card fade-in">
+                    <h3><span class="icon">🏢</span> In-Person Sessions:</h3>
+                    <p>Punctuality reflects commitment and professionalism.</p>
+                    <ul>
+                        <li>Arrive 10–15 minutes early</li>
+                        <li>Be fully prepared before student arrival</li>
+                    </ul>
+                    <h3 style="margin-top: 1.5rem;"><span class="icon">💻</span> Virtual Sessions:</h3>
+                    <ul>
+                        <li>Log in 5 minutes early</li>
+                        <li>Test camera, microphone, and materials</li>
+                    </ul>
+                    <div class="alert-box">
+                        <p>⚠️ Repeated lateness or missed sessions will be reviewed and documented.</p>
+                    </div>
+                </div>
+                <div class="content-card fade-in">
+                    <h3><span class="icon">👔</span> Professional Conduct:</h3>
+                    <ul>
+                        <li>Dress appropriately</li>
+                        <li>No personal phone use during sessions</li>
+                        <li>Maintain professional boundaries</li>
+                        <li>Avoid side conversations unrelated to tutoring</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Cancellation & Rescheduling -->
+        <section class="handbook-section" id="cancellation">
+            <div class="section-header fade-in">
+                <div class="section-number">7</div>
+                <div class="section-title">
+                    <h2>Cancellation & Rescheduling Policies</h2>
+                    <p>Maintaining consistency for student success</p>
+                </div>
+            </div>
+            <div class="two-column">
+                <div class="content-card fade-in">
+                    <h3><span class="icon">👨‍🏫</span> Tutor Cancellations:</h3>
+                    <p>Consistency is critical to student success.</p>
+                    <ul>
+                        <li>24-hour minimum notice required</li>
+                        <li>Emergency cancellations must be reported immediately</li>
+                        <li>Classes canceled without proper notice must be made up within 72 hours</li>
+                        <li>Repeated cancellations may result in reassignment or review</li>
+                    </ul>
+                </div>
+                <div class="content-card fade-in">
+                    <h3><span class="icon">🎒</span> Student Cancellations:</h3>
+                    <ul>
+                        <li>Follow established 24-hour policy</li>
+                        <li>Document no-shows in TutorBird</li>
+                        <li>Notify tutor coordinator if attendance becomes inconsistent</li>
+                    </ul>
+                    <div class="info-box">
+                        <p>📝 All schedule changes must be documented in TutorBird.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8: Communication & Reporting -->
+        <section class="handbook-section" id="communication">
+            <div class="section-header fade-in">
+                <div class="section-number">8</div>
+                <div class="section-title">
+                    <h2>Communication & Reporting</h2>
+                    <p>Clear communication ensures operational excellence</p>
+                </div>
+            </div>
+            <div class="content-card fade-in">
+                <h3><span class="icon">📞</span> Communication Guidelines:</h3>
+                <ul>
+                    <li>Respond within 24 hours</li>
+                    <li>Use TutorBird for scheduling</li>
+                    <li>Escalate concerns promptly</li>
+                </ul>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <div class="icon">📞</div>
+                        <h4>Urgent Matters</h4>
+                        <a href="tel:301-658-6884">301-658-6884</a>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon">📧</div>
+                        <h4>General Correspondence</h4>
+                        <a href="mailto:admin@mathetc.org">admin@mathetc.org</a>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon">💰</div>
+                        <h4>Payroll Inquiries</h4>
+                        <a href="mailto:hr@mathetc.net">hr@mathetc.net</a>
+                    </div>
+                </div>
+            </div>
+            <div class="content-card fade-in">
+                <h3><span class="icon">📊</span> Reporting Requirements:</h3>
+                <ul>
+                    <li>Complete session notes after every session</li>
+                    <li>Document student progress and challenges</li>
+                    <li>Record attendance accurately and timely</li>
+                    <li>Submit monthly progress updates if requested</li>
+                    <li>Report academic or behavioral concerns immediately</li>
+                </ul>
+                <div class="alert-box">
+                    <p>⚠️ Failure to properly document sessions may delay payroll processing.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 9: TutorBird Guidelines -->
+        <section class="handbook-section" id="tutorbird">
+            <div class="section-header fade-in">
+                <div class="section-number">9</div>
+                <div class="section-title">
+                    <h2>TutorBird Guidelines & Curriculum Management</h2>
+                    <p>Your official management system</p>
+                </div>
+            </div>
+            <div class="content-card fade-in">
+                <h3><span class="icon">🐦</span> TutorBird is the official management system</h3>
+                <p><strong>Tutors Must:</strong></p>
+                <ul>
+                    <li>Log session notes immediately after sessions</li>
+                    <li>Upload relevant materials when necessary</li>
+                    <li>Maintain accurate scheduling</li>
+                    <li>Familiarize themselves with the tutoring plans/packages</li>
+                </ul>
+                <div class="package-grid">
+                    <div class="package-card">📘 Basic</div>
+                    <div class="package-card">📙 Growth</div>
+                    <div class="package-card">📗 Advanced</div>
+                </div>
+                <p style="margin-top: 1rem; color: #666; font-size: 0.95rem;">This will make for effective tracking of student hours.</p>
+            </div>
+            <div class="content-card fade-in">
+                <h3><span class="icon">📚</span> Curriculum Standards:</h3>
+                <ul>
+                    <li>Align lessons with school curriculum</li>
+                    <li>Customize instruction based on student assessment</li>
+                    <li>Track measurable goals</li>
+                    <li>Provide structured lesson plans</li>
+                    <li>Use engaging, multi-modal teaching strategies</li>
+                </ul>
+                <div class="highlight-box">
+                    <p><strong>Online Resources:</strong> Find the MathETC Curriculum on the 'Online Resources' segment of TutorBird. Also engage resources such as: <strong>IXL Math</strong>, <strong>Kurt Software</strong>, <strong>McGraw Hill</strong></p>
+                </div>
+                <div class="info-box">
+                    <p>💡 Communicate to the Tutor Coordinator on any further assistance you may require.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 10: Virtual Class Standards -->
+        <section class="handbook-section" id="virtual">
+            <div class="section-header fade-in">
+                <div class="section-number">10</div>
+                <div class="section-title">
+                    <h2>Virtual Class Standards</h2>
+                    <p>Online excellence is non-negotiable</p>
+                </div>
+            </div>
+            <div class="two-column">
+                <div class="content-card fade-in">
+                    <h3><span class="icon">⚙️</span> Technical Requirements:</h3>
+                    <p>Virtual sessions must meet the same quality standards as in-person sessions.</p>
+                    <ul>
+                        <li>Stable internet connection</li>
+                        <li>Quiet, distraction-free environment</li>
+                        <li>Neutral or professional background</li>
+                        <li>Adequate lighting</li>
+                        <li>Camera on during session</li>
+                    </ul>
+                </div>
+                <div class="content-card fade-in">
+                    <h3><span class="icon">🎯</span> Virtual Engagement:</h3>
+                    <ul>
+                        <li>Use screen share and interactive tools</li>
+                        <li>Check for understanding frequently</li>
+                        <li>Encourage active participation</li>
+                        <li>Avoid multitasking</li>
+                    </ul>
+                    <div class="alert-box">
+                        <p>⚠️ Virtual professionalism is non-negotiable.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 11: Lesson Planning -->
+        <section class="handbook-section" id="lesson-planning">
+            <div class="section-header fade-in">
+                <div class="section-number">11</div>
+                <div class="section-title">
+                    <h2>Lesson Planning & Best Practices</h2>
+                    <p>Structured academic intervention</p>
+                </div>
+            </div>
+            <div class="content-card fade-in">
+                <h3><span class="icon">✨</span> Effective Tutors:</h3>
+                <ul>
+                    <li>Prepare structured lesson plans</li>
+                    <li>Differentiate instruction</li>
+                    <li>Are patient and empathetic</li>
+                    <li>Encourage independent thinking</li>
+                    <li>Use varied teaching methods</li>
+                    <li>Assess comprehension throughout sessions</li>
+                </ul>
+                <div class="highlight-box">
+                    <p><strong>Remember:</strong> Tutoring is not homework help alone — it is structured academic intervention.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 12: Payroll -->
+        <section class="handbook-section" id="payroll">
+            <div class="section-header fade-in">
+                <div class="section-number">12</div>
+                <div class="section-title">
+                    <h2>Payroll & Work Hours</h2>
+                    <p>Accurate time tracking</p>
+                </div>
+            </div>
+            <div class="content-card fade-in">
+                <h3><span class="icon">💳</span> Payroll Guidelines:</h3>
+                <ul>
+                    <li>Work hours must be accurately entered in ADP</li>
+                    <li>Contact HR for payroll concerns at <a href="mailto:hr@mathetc.net" style="color: var(--primary-orange);">hr@mathetc.net</a></li>
+                    <li>Payroll discrepancies must be reported immediately</li>
+                </ul>
+                <div class="alert-box">
+                    <p>⚠️ Failure to enter hours correctly may delay payment.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 13: Safety & Confidentiality -->
+        <section class="handbook-section" id="safety">
+            <div class="section-header fade-in">
+                <div class="section-number">13</div>
+                <div class="section-title">
+                    <h2>Student Safety & Confidentiality</h2>
+                    <p>Protecting our students</p>
+                </div>
+            </div>
+            <div class="content-card fade-in">
+                <h3><span class="icon">🛡️</span> Tutors must:</h3>
+                <ul>
+                    <li>Protect student academic records</li>
+                    <li>Maintain strict confidentiality</li>
+                    <li>Avoid sharing personal contact information without approval</li>
+                    <li>Report safety concerns immediately</li>
+                    <li>Maintain appropriate professional boundaries</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 14: Performance -->
+        <section class="handbook-section" id="performance">
+            <div class="section-header fade-in">
+                <div class="section-number">14</div>
+                <div class="section-title">
+                    <h2>Performance & Accountability</h2>
+                    <p>Measuring excellence</p>
+                </div>
+            </div>
+            <div class="content-card fade-in">
+                <h3><span class="icon">📈</span> Tutors will be evaluated based on:</h3>
+                <div class="eval-grid">
+                    <div class="eval-item">
+                        <div class="icon">📊</div>
+                        <h4>Student Progress</h4>
+                    </div>
+                    <div class="eval-item">
+                        <div class="icon">📝</div>
+                        <h4>Documentation Compliance</h4>
+                    </div>
+                    <div class="eval-item">
+                        <div class="icon">⏰</div>
+                        <h4>Punctuality</h4>
+                    </div>
+                    <div class="eval-item">
+                        <div class="icon">💬</div>
+                        <h4>Communication</h4>
+                    </div>
+                    <div class="eval-item">
+                        <div class="icon">⭐</div>
+                        <h4>Parent/Student Feedback</h4>
+                    </div>
+                    <div class="eval-item">
+                        <div class="icon">👔</div>
+                        <h4>Professional Conduct</h4>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <p>📅 Performance reviews may occur quarterly or as needed.</p>
+                </div>
+                <div class="alert-box">
+                    <p>⚠️ MathETC reserves the right to enforce corrective action when standards are not met.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Acknowledgment Section -->
+        <section class="acknowledgment-section" id="acknowledgment">
+            <div class="acknowledgment-card fade-in">
+                <h2>📝 Acknowledgment of Receipt</h2>
+                <p>I acknowledge that I have read and understand the MathETC Tutor Handbook. I agree to uphold the standards, policies, and procedures outlined herein.</p>
+                
+                <form id="acknowledgmentForm">
+                    <div class="form-group">
+                        <label for="tutorName">Tutor Name</label>
+                        <input type="text" id="tutorName" name="tutorName" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signature">Signature</label>
+                        <input type="text" id="signature" name="signature" placeholder="Type your signature" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Date</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="agree" name="agree" required>
+                        <label for="agree">I have read the entire MathETC Tutor Handbook and agree to uphold all standards, policies, and procedures outlined within this document.</label>
+                    </div>
+                    <button type="submit" class="submit-btn" id="submitBtn">Submit Acknowledgment</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="logo">Math<span>ETC</span></div>
+            <p>Personalized Academic Support • K–12</p>
+            <p class="quote">"Together, we build confident, independent learners"</p>
+            <p style="margin-top: 1.5rem;">📧 admin@mathetc.org | 📞 301-658-6884</p>
+            <p style="margin-top: 1rem; font-size: 0.8rem;">© 2024 MathETC. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal">
+            <div class="icon">✓</div>
+            <h3>Thank You!</h3>
+            <p>Your acknowledgment has been submitted successfully.</p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Mobile Sidebar Toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.menu-toggle');
+            sidebar.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+
+        // Close sidebar when clicking a link on mobile
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 1024) {
+                    document.getElementById('sidebar').classList.remove('active');
+                    document.querySelector('.menu-toggle').classList.remove('active');
+                }
+            });
+        });
+
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+        });
+
+        // Active Navigation Link
+        const sections = document.querySelectorAll('.handbook-section');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Scroll Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Set today's date as default
+        document.getElementById('date').valueAsDate = new Date();
+
+        // Form Submission
+        document.getElementById('acknowledgmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('tutorName').value;
+            const signature = document.getElementById('signature').value;
+            const date = document.getElementById('date').value;
+            const agreed = document.getElementById('agree').checked;
+
+            if (name && signature && date && agreed) {
+                document.getElementById('successModal').classList.add('show');
+                this.reset();
+                document.getElementById('date').valueAsDate = new Date();
+            }
+        });
+
+        // Close Modal
+        function closeModal() {
+            document.getElementById('successModal').classList.remove('show');
+        }
+
+        // Close modal on overlay click
+        document.getElementById('successModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Close sidebar on resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 1024) {
+                document.getElementById('sidebar').classList.remove('active');
+                document.querySelector('.menu-toggle').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
